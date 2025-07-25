@@ -1,0 +1,47 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  # Service PostgreSQL
+  postgres:
+    image: postgres:13-alpine # Version légère de PostgreSQL
+    container_name: devlink-postgres
+    environment:
+      POSTGRES_DB: devlinkdb
+      POSTGRES_USER: devlinkuser
+      POSTGRES_PASSWORD: devlinkpassword
+    ports:
+      - "5432:5432" # Mappe le port 5432 du conteneur au port 5432 de l'hôte
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Volume persistant pour les données de la BD
+
+  # Service Zookeeper (nécessaire pour Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0 # Version de Zookeeper compatible avec Kafka
+    container_name: devlink-zookeeper
+    ports:
+      - "2181:2181" # Mappe le port 2181 de Zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  # Service Kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0 # Version de Kafka
+    container_name: devlink-kafka
+    ports:
+      - "9092:9092" # Mappe le port 9092 de Kafka
+    depends_on:
+      - zookeeper # Dépend de Zookeeper pour démarrer
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Connexion à Zookeeper
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092 # Listeners pour Kafka
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+volumes:
+  postgres_data: # Définition du volume persistant pour PostgreSQL
