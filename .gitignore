@@ -1,33 +1,63 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Fichiers compilés
+*.class
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Répertoires de build
+/build/
+/target/
+/out/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Logs
+*.log
+
+# Fichiers de configuration IDE
 *.iml
-*.ipr
+.idea/
+.project
+.classpath
+.settings/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Fichiers générés par Maven
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Fichiers générés par Gradle
+.gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# Wrapper Gradle
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Répertoire local de dépendances
+/.gradle/
+/.gradle/
+
+# Fichiers de test
+/test-output/
+/surefire-reports/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers environnement
+.env
+
+# Fichiers jar, war, ear
+*.jar
+*.war
+*.ear
+
+# Fichiers temporaires
+*.tmp
+*.swp
+*.swo
+
+# Caches de JetBrains
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# VSCode (si utilisé)
 .vscode/
