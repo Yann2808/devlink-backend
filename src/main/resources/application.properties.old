@@ -5,8 +5,8 @@ server.port=8080
 
 # PostgreSQL Database configuration
 spring.datasource.url=jdbc:postgresql://localhost:5432/devlinkdb
-spring.datasource.username=postgres
-spring.datasource.password=
+spring.datasource.username=devlinkuser
+spring.datasource.password=devlinkpassword
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # Hibernate & JPA configuration
@@ -29,15 +29,16 @@ spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
 # Kafka configuration
 spring.kafka.bootstrap-servers=localhost:9092
 spring.kafka.consumer.group-id=devlink-group
-spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
-spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
-spring.kafka.consumer.properties.spring.json.trusted.packages=*
-
+spring.kafka.consumer.auto-offset-reset=earliest
 spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
-spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.JsonSerializer
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.JsonDeserializer
+# Désactiver les en-têtes de type pour JSON
+spring.kafka.producer.properties.spring.json.add.type.headers=false
 
-# Cl\u00E9 secr\u00E9te JWT (\u00E0 g\u00E9n\u00E9rer et garder s\u00E9curis\u00E9e, ici juste pour le d\u00E9veloppement)
-# Utilisez une cha\u00EEne de caract\u00E8res longue et al\u00E9atoire en production !
+# Clé secrète JWT (à générer et garder sécurisée, ici juste pour le développement)
+# Utilisez une chaîne de caractères longue et aléatoire en production !
 jwt.secret=YourSuperSecretKeyForDevLinkApplicationWhichIsAtLeast256BitsLongAndShouldBeStoredSecurelyInProductionEnvironment
 # 24 heures en millisecondes (24 * 60 * 60 * 1000) pour l'expiration du JWT
 jwt.expiration=86400000
